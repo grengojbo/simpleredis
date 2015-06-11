@@ -1,7 +1,7 @@
 package simpleredis
 
 import (
-	"github.com/xyproto/pinterface"
+	"github.com/grengojbo/pinterface"
 )
 
 // For implementing pinterface.ICreator
