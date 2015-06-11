@@ -6,6 +6,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/Unknwon/com"
 	"github.com/garyburd/redigo/redis"
 )
 
@@ -300,6 +301,15 @@ func NewHashMap(pool *ConnectionPool, id string) *HashMap {
 // Select a different database
 func (rh *HashMap) SelectDatabase(dbindex int) {
 	rh.dbindex = dbindex
+}
+
+// Put a value in a hashmap given the element id (for instance a user id) and the key (for instance "password")
+func (rh *HashMap) Put(elementid string, key string, value interface{}, expire int64) error {
+	conn := rh.pool.Get(rh.dbindex)
+	// if expire == 0 {
+	_, err := conn.Do("HSET", rh.id+":"+elementid, key, com.ToStr(value))
+	// }
+	return err
 }
 
 // Set a value in a hashmap given the element id (for instance a user id) and the key (for instance "password")
